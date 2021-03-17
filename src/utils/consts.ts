@@ -1,0 +1,5 @@
+export const LOGIN_ROUTE = '/auth'
+export const MAIN_ROUTE = '/'
+export const SERVER_BUY = '/servers/buy'
+export const MY_SERVERS = '/servers'
+export const CONTROL_SERVER = '/servers/:sid'
