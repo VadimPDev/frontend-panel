@@ -53,3 +53,7 @@ interface RegisterUserSuccessAction {
         password:string
     }
 }
+
+export type RegisterUserResponse = {
+    token:string
+}

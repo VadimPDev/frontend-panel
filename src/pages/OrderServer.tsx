@@ -3,8 +3,6 @@ import {useActions} from '../hooks/useActions'
 import {useTypedSelector} from '../hooks/useTypedSelector'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions'
-import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider'
@@ -15,14 +13,12 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import Select from '@material-ui/core/Select';
 import {IGame,ILocation, IVersion} from '../types/orderServer'
-import {orderServer} from '../http/serverApi'
+import {serverAPI} from '../http/serverApi'
 import { useHistory } from 'react-router';
 import OrderTotal from '../components/UI/OrderTotal';
+import { useDispatch } from 'react-redux';
+import { setError , setMessage} from '../store/actions/global';
 
-
-function Alert(props: AlertProps) {
-    return <MuiAlert elevation={6} variant="filled" {...props} />;
-  }
 
 const OrderServer:React.FC = () => {
 
@@ -30,6 +26,7 @@ const OrderServer:React.FC = () => {
     const {games,locations,versions} = useTypedSelector(state => state.order)
 
     const history = useHistory()
+    const dispatch = useDispatch()
 
     const [game,setGame] = useState<IGame>({} as IGame)
     const [version,setVersion] = useState<IVersion>({} as IVersion)
@@ -37,8 +34,6 @@ const OrderServer:React.FC = () => {
     const [slots,setSlots] = useState<number | number[]>(10)
     const [period,setPeriod] = useState<number>(30)
     const [price,setPrice] = useState<number>(0)
-    const [open, setOpen] = React.useState(false);
-    const [message,setMessage] = useState<string>('')
 
 
     useEffect(()=>{
@@ -57,14 +52,7 @@ const OrderServer:React.FC = () => {
         calculatePrice()
     },[slots,game,period])
 
-    
-    const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
-        if (reason === 'clickaway') {
-          return;
-        }
-    
-        setOpen(false);
-    };
+
 
     function valuetext(value: number) {
         return `${value}°C`;
@@ -72,14 +60,13 @@ const OrderServer:React.FC = () => {
 
     const orderServerHandler = async() =>{
         try{
-            const data = await orderServer(game.id,location.id,slots,period,version.id)
-            setMessage(data.message)
-            setOpen(true)
+            const {data} = await serverAPI.orderServer(game.id,location.id,slots,period,version.id)
+            dispatch(setMessage(data.message))
             setTimeout(()=>{
                 history.push('/')
             },3000)
         }catch(e){
-            console.log(e)
+            dispatch(setError(e))
         }
     }
 
@@ -98,7 +85,7 @@ const OrderServer:React.FC = () => {
                     break
                 case 360:
                     price *=12
-                    break            
+                    break
             }
             setPrice(price)
         }
@@ -121,19 +108,14 @@ const OrderServer:React.FC = () => {
         setSlots(newValue);
       };
 
-  
+
 
     return (
         <Grid container justify={'center'} >
-            <Snackbar anchorOrigin={{ vertical:'top', horizontal:'right' }} open={open} autoHideDuration={4000} onClose={handleClose}>
-                    <Alert onClose={handleClose} severity="success">
-                        {message}
-                    </Alert>
-            </Snackbar>
                 <Card style={{width:850,margin:5}}>
                 <CardContent>
                     <Typography  color="textSecondary" gutterBottom>
-                    Заказ сервера 
+                    Заказ сервера
                     </Typography>
                     <Grid container direction={"column"}>
                         <FormControl style={{maxWidth:650,marginTop:15}}>
@@ -143,7 +125,7 @@ const OrderServer:React.FC = () => {
                             id="game"
                             value={game.g_name}
                             name='game'
-                            onChange={changeHandler}  
+                            onChange={changeHandler}
                             >
                                 {games.map(game =>{
                                     return <MenuItem value={game.id} key={game.id}>{game.g_name}</MenuItem>
@@ -157,12 +139,12 @@ const OrderServer:React.FC = () => {
                             id="location"
                             name='location'
                             value={location.l_name}
-                            onChange={changeHandler}  
+                            onChange={changeHandler}
                             >
                             {locations.map(location =>{
                                 return <MenuItem value={location.id} key={location.id}>{location.l_name}</MenuItem>
                             })}
-    
+
                             </Select>
                         </FormControl>
                         <FormControl style={{maxWidth:650,marginTop:15}}>
@@ -172,12 +154,12 @@ const OrderServer:React.FC = () => {
                             id="version"
                             name='version'
                             value={version.v_name}
-                            onChange={changeHandler}  
+                            onChange={changeHandler}
                             >
                             {versions.map(version =>{
                                 return <MenuItem value={version.id} key={version.id}>{version.v_name}</MenuItem>
                             })}
-    
+
                             </Select>
                         </FormControl>
                         <FormControl style={{maxWidth:650,marginTop:15}}>
@@ -213,17 +195,17 @@ const OrderServer:React.FC = () => {
                         />
                     </Grid>
                 </CardContent>
-                
+
                 </Card>
-               
-                <OrderTotal 
-                    game={game} 
-                    location={location} 
-                    slots={slots} 
-                    price={price} 
-                    period={period} 
-                    version={version} 
-                    orderServerHandler={orderServerHandler} 
+
+                <OrderTotal
+                    game={game}
+                    location={location}
+                    slots={slots}
+                    price={price}
+                    period={period}
+                    version={version}
+                    orderServerHandler={orderServerHandler}
                />
         </Grid>
     );

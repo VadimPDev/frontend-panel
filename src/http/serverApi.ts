@@ -1,9 +1,10 @@
-import { IVersion } from '../types/orderServer'
+import { IGame, ILocation, IVersion } from '../types/orderServer'
 import {$authHost} from './index'
-import {IInfoServer} from '../types/server'
+import {IInfoServer, IServer} from '../types/server'
+import { IResponse } from '../types/global'
 
 
-export const getGames = async() =>{
+/*export const getGames = async() =>{
     const {data} = await $authHost.get('/api/game/')
     return data
 }
@@ -45,7 +46,7 @@ export const getVersions = async(gameId:number):Promise<IVersion[]> =>{
     return data
 }
 
-export const getMyServers = async() =>{
+export const getMyServers = async():Promise<IServer[]> =>{
     const {data} = await $authHost.get('/api/server/all')
     return data
 }
@@ -66,4 +67,55 @@ export const getServerInfo = async(id:string):Promise<IInfoServer> =>{
         }
     })
     return data
+}
+*/
+
+export const serverAPI = {
+    getGames(){
+        return $authHost.get<IGame[]>('/api/game/')
+    },
+    orderServer(game_id:number,location_id:number,slots:number | number[],period:number,version:number){
+        return $authHost.post<IResponse>('/api/server/order',{
+            game_id,
+            location_id,
+            slots,
+            period,
+            version_id:version
+        })
+    },
+    startServer(serverId:number){
+        return $authHost.post<IResponse>('/api/server/start',{
+            serverId
+        })
+    },
+    stopServer(serverId:number){
+        return $authHost.post<IResponse>('/api/server/stop',{
+            serverId
+        })
+    },
+    getLocations(){
+        return $authHost.get<ILocation[]>('/api/location/')
+    },
+    getVersions(gameId:number){
+        return $authHost.get<IVersion[]>('/api/version/',{
+            params:{gameId}
+        })
+    },
+    getMyServers(){
+        return $authHost.get<IServer[]>('/api/server/all')
+    },
+    getMyServerById(id:string){
+        return $authHost.get('/api/server/my',{
+            params:{
+                id
+            }
+        })
+    },
+    getServerInfo(id:string){
+        return $authHost.get<IInfoServer>('/api/server/info',{
+            params:{
+                id
+            }
+        })
+    }
 }

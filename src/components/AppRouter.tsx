@@ -7,15 +7,15 @@ import { LOGIN_ROUTE, MAIN_ROUTE } from '../utils/consts'
 
 const AppRouter = () => {
     const {isAuth} = useTypedSelector(state => state.user)
-    
+
     return isAuth ? (
         <>
         <Switch>
-            {sidebarRoutes.map(({path,Component}) => 
-                <Route key={path} path={path}  component={Component} exact={true} /> 
+            {sidebarRoutes.map(({path,Component}) =>
+                <Route key={path} path={path}  component={Component} exact={true} />
             )}
-             {privateRoutes.map(({path,Component}) => 
-                <Route key={path} path={path}  component={Component} exact={true} /> 
+             {privateRoutes.map(({path,Component}) =>
+                <Route key={path} path={path}  component={Component} exact={true} />
             )}
             <Redirect to={MAIN_ROUTE} />
         </Switch>
@@ -23,7 +23,7 @@ const AppRouter = () => {
     )
     : (
         <Switch>
-            {publicRoutes.map(({path,Component}) => 
+            {publicRoutes.map(({path,Component}) =>
                <Route key={path} path={path}  component={Component} exact={true} />
             )}
             <Redirect to={LOGIN_ROUTE} />

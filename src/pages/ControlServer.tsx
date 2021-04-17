@@ -15,7 +15,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import InfoComponent from '../components/InfoComponent';
 import FtpComponent from '../components/FtpComponent';
-import { getServerInfo } from '../http/serverApi';
+import { serverAPI} from '../http/serverApi';
 import {IInfoServer} from '../types/server'
 
 interface TabPanelProps {
@@ -26,7 +26,7 @@ interface TabPanelProps {
   }
 function TabPanel(props: TabPanelProps) {
     const { children, value, index, ...other } = props;
-  
+
     return (
       <div
         role="tabpanel"
@@ -43,14 +43,14 @@ function TabPanel(props: TabPanelProps) {
       </div>
     );
   }
-  
+
   function a11yProps(index: any) {
     return {
       id: `full-width-tab-${index}`,
       'aria-controls': `full-width-tabpanel-${index}`,
     };
   }
-  
+
 
 
 
@@ -71,10 +71,11 @@ const ControlServer:React.FC = () => {
     };
 
     useEffect(()=>{
+      let mounted  = true
 
       async function fetchInfo(){
-        const data = await getServerInfo(sid)
-        setInfo(data)
+        const data = await serverAPI.getServerInfo(sid)
+        setInfo(data.data)
       }
 
       if(s_status === 0 ){
@@ -82,8 +83,8 @@ const ControlServer:React.FC = () => {
       }else{
         fetchInfo()
       }
-    },[sid,s_status])
-  
+    },[s_status])
+
 
 
 
@@ -97,14 +98,14 @@ const ControlServer:React.FC = () => {
                 <CardContent>
                     <CardMedia style={{paddingTop:'100%',height:0}} image='https://logodix.com/logo/304489.png' title='server' />
                     <Grid container justify='center' direction='column'>
-                        {s_status === 0 
+                        {s_status === 0
                         ?
                         <Button size="large" color="primary" variant='contained' style={{margin:5}} onClick={() => StartServer(id)}>Включить</Button>
                         :
                         <>
                         <Button size="large" color="primary" variant='contained' style={{margin:5}} onClick={() => StopServer(id)}>Выключить</Button>
                         <Button size="large" color="primary" variant='contained' style={{margin:5}}>Перезапустить</Button>
-                        </>                  
+                        </>
                         }
                     </Grid>
                     <Typography variant="h6" component="h3">
@@ -117,26 +118,26 @@ const ControlServer:React.FC = () => {
                         Локация: {location?.l_name}
                     </Typography>
                     <Typography variant="h6" component="h3">
-                        Адрес: {location?.l_ip + ':' + s_port} 
+                        Адрес: {location?.l_ip + ':' + s_port}
                     </Typography>
                     {s_status === 1
                     ?
                     <>
                     <Typography variant="h6" component="h3">
-                        Имя: {info.hostname} 
+                        Имя: {info.hostname}
                     </Typography>
                     <Typography variant="h6" component="h3">
-                        Онлайн: {info.online}/{info.maxplayers} 
+                        Онлайн: {info.online}/{info.maxplayers}
                     </Typography>
                     </>
                     : null
                     }
-                    
+
                 </CardContent>
                 <CardActions>
-                
+
                 </CardActions>
-            </Card>  
+            </Card>
 
         <div style={{margin:5}}>
         <AppBar position="static" color="default">

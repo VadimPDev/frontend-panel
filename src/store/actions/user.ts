@@ -1,5 +1,5 @@
 import { IUser, UserAction, UserActionTypes } from './../../types/user';
-import {login} from '../../http/userAPI'
+import {login,userAPI} from '../../http/userAPI'
 import {Dispatch} from 'redux'
 
 
@@ -7,7 +7,7 @@ export const loginUser = (email:string,password:string) =>{
     return  async(dispatch:Dispatch<UserAction>) =>{
         try{
             dispatch({type:UserActionTypes.LOGIN_USER})
-            const response = await login(email,password)
+            const response = await userAPI.login(email, password)
             dispatch(setUser(response.email,response.role,response.id))
         }catch(e){
 

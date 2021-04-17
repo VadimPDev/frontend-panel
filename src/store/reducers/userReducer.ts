@@ -20,8 +20,8 @@ export const userReducer = (state = initialState,action:UserAction):IUserState =
         case UserActionTypes.REGISTER_USER_SUCCESS:
             return {...state,loading:false}
         case UserActionTypes.LOGOUT_USER:
-            return {...state,user:{},isAuth:false}    
+            return {...state,user:{},isAuth:false}
         default:
-            return state    
+            return state
     }
 }

@@ -1,4 +1,8 @@
 import axios,{AxiosRequestConfig} from 'axios'
+import { logOutUser } from '../store/actions/user'
+import {store} from '../store/index'
+import { GlobalActionTypes } from '../types/global'
+import { UserActionTypes } from '../types/user'
 
 
 export const $authHost = axios.create({
@@ -16,13 +20,16 @@ const authInerceptor = (config:AxiosRequestConfig) => {
 }
 
 $authHost.interceptors.response.use((response) => {
-    if(response.status === 401) {
-         //window.location.replace('http://localhost:5000/')
-    }
     return response;
 }, (error) => {
     if (error.response && error.response.data) {
-
+        if(error.response.status === 401){
+            // сделать систему refresh токенов
+            store.dispatch({type:UserActionTypes.LOGOUT_USER})
+        }
+        if(error.response.status === 403){
+            // не работает
+        }
     }
     return Promise.reject(error.message);
 });
