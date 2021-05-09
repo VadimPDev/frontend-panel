@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer'
 import Divider from '@material-ui/core/Divider'
@@ -8,10 +8,19 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import Toolbar from '@material-ui/core/Toolbar';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
+import Collapse from '@material-ui/core/Collapse';
 import MailIcon from '@material-ui/icons/Mail';
+import HomeIcon from '@material-ui/icons/Home';
+import SettingsIcon from '@material-ui/icons/Settings';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import PeopleIcon from '@material-ui/icons/People';
 import StyledLink from './StyledLink'
-import {sidebarRoutes} from '../../routes'
-
+import {adminRoutes, sidebarRoutes} from '../../routes'
+import {useTypedSelector} from '../../hooks/useTypedSelector'
+import {ALL_USERS_ADMIN, MAIN_ROUTE,MY_SERVERS,SERVER_BUY} from '../../utils/consts'
 
 const useStyles = makeStyles((theme: Theme) =>
         createStyles({
@@ -35,9 +44,32 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
+ const getIcon = (path:string) =>{
+   switch (path){
+    case MAIN_ROUTE:
+       return <HomeIcon />
+    case SERVER_BUY:
+      return <ShoppingCartIcon />
+    case MY_SERVERS:
+      return <SportsEsportsIcon />
+    case ALL_USERS_ADMIN:
+      return <PeopleIcon />
+    default:
+      return <HomeIcon />
+   }
+ }
+
+
 const SideBar:React.FC = () => {
 
     const classes = useStyles()
+    const {user} = useTypedSelector(state => state.user)
+    const [open, setOpen] = useState<boolean>(false)
+
+    const handleClick = () => {
+      setOpen(!open);
+    };
+
     return (
         <Drawer
         className={classes.drawer}
@@ -52,21 +84,39 @@ const SideBar:React.FC = () => {
             {sidebarRoutes.map((route,index) => (
               <StyledLink to={route.path} key={index}>
                 <ListItem button key={route.title}>
-                  <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                  <ListItemIcon>{getIcon(route.path)}</ListItemIcon>
+                  <ListItemText primary={route.title} />
+                </ListItem>
+              </StyledLink>
+            ))}
+            {user.role === 'ADMIN'
+            ?
+          <ListItem button onClick={handleClick}>
+              <ListItemIcon>
+                <SettingsIcon />
+              </ListItemIcon>
+              <ListItemText primary="Админ панель" />
+              {open ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            :''
+          }
+          </List>
+          {user.role === 'ADMIN'
+            ?
+          <Collapse in={open} timeout="auto" unmountOnExit>
+          <List>
+            {adminRoutes.map((route, index) => (
+              <StyledLink to={route.path} key={index}>
+                <ListItem button key={route.title}>
+                  <ListItemIcon>{getIcon(route.path)}</ListItemIcon>
                   <ListItemText primary={route.title} />
                 </ListItem>
               </StyledLink>
             ))}
           </List>
-          <Divider />
-          <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-              <ListItem button key={index}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
+        </Collapse>
+          : ''
+          }
         </div>
       </Drawer>
     );

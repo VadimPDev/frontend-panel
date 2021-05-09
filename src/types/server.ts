@@ -1,7 +1,18 @@
 export enum ServerActionTypes  {
     SERVER_START = 'SERVER_START',
     SERVER_STOP = 'SERVER_STOP',
-    GET_MY_SERVER = 'GET_MY_SERVER'
+    GET_MY_SERVER = 'GET_MY_SERVER',
+    RESET_ORDERS_SERVERS = 'RESET_ORDERS_SERVERS',
+    GET_SERVER_CONFIG = 'GET_SERVER_CONFIG',
+}
+
+
+
+export enum ServerStatus {
+    'Выключен' = 0,
+    'Работает' = 1,
+    'Заблокирован' = 2,
+    'Просрочен' = 3
 }
 
 export interface IServer {
@@ -16,17 +27,23 @@ export interface IServer {
     };
     game:{
         g_name:string;
-    },
+        g_code:string;
+    };
     version:{
         v_name:string
-    }
+    };
 }
 
 export  interface IInfoServer {
-    hostname:string;
-    online:number;
+    name:string;
+    map:string;
     players:[];
     maxplayers:number;
+    raw:{
+        numplayers:number;
+        gamemode:string;
+    };
+    ping:number
 }
 
 

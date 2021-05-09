@@ -117,5 +117,18 @@ export const serverAPI = {
                 id
             }
         })
+    },
+    getConfig(id:number){
+        return $authHost.get('/api/server/config',{
+            params:{id}
+        })
+    },
+    putConfig(id:number, config:string){
+        return $authHost.post('/api/server/config',{id,config})
+    },
+    getConsole(id:number){
+        return $authHost.get('/api/server/console',{
+            params:{id}
+        })
     }
 }

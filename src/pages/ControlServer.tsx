@@ -17,6 +17,12 @@ import InfoComponent from '../components/InfoComponent';
 import FtpComponent from '../components/FtpComponent';
 import { serverAPI} from '../http/serverApi';
 import {IInfoServer} from '../types/server'
+import ConfigComponent from '../components/ConfigComponent';
+import ConsoleComponent from '../components/ConsoleComponent';
+import SampImage from '../assets/img/games/samp.png'
+import MtaImage from '../assets/img/games/mtasa.png'
+import Cs16Image from '../assets/img/games/cs16.png'
+
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -70,9 +76,18 @@ const ControlServer:React.FC = () => {
       setValue(newValue);
     };
 
-    useEffect(()=>{
-      let mounted  = true
+    const getImage = (code:string) => {
+      switch(code){
+        case 'samp':
+          return SampImage
+        case 'mtasa':
+          return MtaImage
+        case 'cs16':
+          return Cs16Image
+      }
+    }
 
+    useEffect(()=>{
       async function fetchInfo(){
         const data = await serverAPI.getServerInfo(sid)
         setInfo(data.data)
@@ -92,11 +107,12 @@ const ControlServer:React.FC = () => {
         getMyserver(sid)
     },[])
 
+
     return (
         <Grid container justify='center'>
               <Card variant="outlined" style={{minWidth:300,margin:5}}>
                 <CardContent>
-                    <CardMedia style={{paddingTop:'100%',height:0}} image='https://logodix.com/logo/304489.png' title='server' />
+                    <CardMedia style={{paddingTop:'100%',height:0}} image={getImage(game?.g_code)} title='server' />
                     <Grid container justify='center' direction='column'>
                         {s_status === 0
                         ?
@@ -124,10 +140,10 @@ const ControlServer:React.FC = () => {
                     ?
                     <>
                     <Typography variant="h6" component="h3">
-                        Имя: {info.hostname}
+                        Имя: {info.name}
                     </Typography>
                     <Typography variant="h6" component="h3">
-                        Онлайн: {info.online}/{info.maxplayers}
+                        Онлайн: {info.raw?.numplayers} / {info.maxplayers}
                     </Typography>
                     </>
                     : null
@@ -165,10 +181,10 @@ const ControlServer:React.FC = () => {
         <FtpComponent ip={location.l_ip} password={s_password} id={id} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        <ConfigComponent id={id} />
       </TabPanel>
       <TabPanel value={value} index={3}>
-        Item Four
+        <ConsoleComponent id={id} />
       </TabPanel>
       <TabPanel value={value} index={4}>
         Item Five

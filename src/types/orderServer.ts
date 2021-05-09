@@ -10,6 +10,7 @@ export enum orderActiionTypes {
     FETCH_VERSIONS_SUCCESS = 'FETCH_VERSIONS_SUCCESS',
     FETCH_VERSIONS_START = 'FETCH_VERSIONS_START',
     FETCH_VERSIONS_ERROR = 'FETCH_VERSIONS_ERROR',
+    RESET_ORDERS_SERVERS = 'RESET_ORDERS_SERVERS'
 }
 export interface ILocation {
     id:number;
@@ -47,6 +48,7 @@ export type orderAction = fetchGamesSuccess
                             | fetchVersionsStart 
                             | fetchVersionsSuccess 
                             | fetchVersionsError
+                            | IServerResetOrderAction
 
 interface fetchGamesStart {
     type:orderActiionTypes.FETCH_GAMES_START
@@ -81,4 +83,8 @@ interface fetchVersionsSuccess {
 
 interface fetchVersionsError {
     type:orderActiionTypes.FETCH_VERSIONS_ERROR
+}
+
+interface IServerResetOrderAction {
+    type:orderActiionTypes.RESET_ORDERS_SERVERS;
 }

@@ -13,9 +13,20 @@ export interface IUser {
 }
 
 export interface IUserState {
-    user:IUser | {};
+    user:IUser;
     loading:boolean;
     isAuth:boolean
+}
+
+export interface IUserProfile {
+    id:number;
+    email:string;
+    name:string;
+    family:string;
+    balance:number;
+    role:string;
+    number:string;
+    createdAt:string;
 }
 
 export type UserAction = LoginUserAction | RegisterUserAction | LoginUserSuccessAction | RegisterUserSuccessAction | LogOutUserAction

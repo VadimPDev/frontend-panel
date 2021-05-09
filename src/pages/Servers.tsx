@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import Tooltip from '@material-ui/core/Tooltip';
 import { Grid } from '@material-ui/core';
 import {serverAPI} from '../http/serverApi'
-import { IServer } from '../types/server';
+import { IServer, ServerStatus } from '../types/server';
 import { green,red,grey } from '@material-ui/core/colors';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import RefreshIcon from '@material-ui/icons/Refresh';
@@ -69,7 +69,7 @@ const Servers:React.FC = () => {
                 <TableCell component="th" scope="row">
                   {row.id}
                 </TableCell>
-                <TableCell align="center">{row.s_status === 1 ? 'Работает' : 'Выключен'}</TableCell>
+                <TableCell align="center">{ServerStatus[row.s_status]}</TableCell>
                 <TableCell align="center">{row.game.g_name}</TableCell>
                 <TableCell align="center">{row.location.l_name}</TableCell>
                 <TableCell align="center">{row.location.l_ip}:{row.s_port}</TableCell>

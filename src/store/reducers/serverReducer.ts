@@ -11,11 +11,12 @@ const initialState:IServer = {
         l_name:'',
     },
     game:{
-        g_name:''
+        g_name:'',
+        g_code:''
     },
     version:{
         v_name:''
-    }
+    },
 
 }
 export const serverReducer = (state = initialState,action:ServerAction):IServer =>{
@@ -25,8 +26,8 @@ export const serverReducer = (state = initialState,action:ServerAction):IServer 
         case ServerActionTypes.SERVER_STOP:
             return {...state,s_status:0}
         case ServerActionTypes.GET_MY_SERVER:
-            return {...state, ...action.payload}  
+            return {...state, ...action.payload}
         default:
-            return state    
+            return state
     }
 }

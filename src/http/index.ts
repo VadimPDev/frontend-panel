@@ -1,5 +1,4 @@
 import axios,{AxiosRequestConfig} from 'axios'
-import { logOutUser } from '../store/actions/user'
 import {store} from '../store/index'
 import { GlobalActionTypes } from '../types/global'
 import { UserActionTypes } from '../types/user'
@@ -26,6 +25,7 @@ $authHost.interceptors.response.use((response) => {
         if(error.response.status === 401){
             // сделать систему refresh токенов
             store.dispatch({type:UserActionTypes.LOGOUT_USER})
+            store.dispatch({type:GlobalActionTypes.RESET})
         }
         if(error.response.status === 403){
             // не работает

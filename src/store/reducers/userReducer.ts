@@ -1,9 +1,9 @@
 import { UserAction } from './../../types/user';
-import { IUserState, UserActionTypes } from "../../types/user"
+import { IUserState, UserActionTypes, IUser } from "../../types/user"
 
 
 const initialState:IUserState = {
-    user:{},
+    user:{} as IUser,
     loading:false,
     isAuth:false
 }
@@ -20,7 +20,7 @@ export const userReducer = (state = initialState,action:UserAction):IUserState =
         case UserActionTypes.REGISTER_USER_SUCCESS:
             return {...state,loading:false}
         case UserActionTypes.LOGOUT_USER:
-            return {...state,user:{},isAuth:false}
+            return initialState
         default:
             return state
     }

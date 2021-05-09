@@ -38,3 +38,9 @@ export const fetchVersion = (gameId:number) =>{
         }
     }
 }
+
+export const resetOrdersPage =() =>{
+    return {
+        type:orderActiionTypes.RESET_ORDERS_SERVERS
+    }
+}

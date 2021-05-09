@@ -17,12 +17,13 @@ import {serverAPI} from '../http/serverApi'
 import { useHistory } from 'react-router';
 import OrderTotal from '../components/UI/OrderTotal';
 import { useDispatch } from 'react-redux';
-import { setError , setMessage} from '../store/actions/global';
+import { setError , setMessage,ResetGlobal} from '../store/actions/global';
+import { resetOrdersPage } from '../store/actions/order';
 
 
 const OrderServer:React.FC = () => {
 
-    const {fetchGames,fetchLocations,fetchVersion} = useActions()
+    const {fetchGames,fetchLocations,fetchVersion,startLoading,stopLoading} = useActions()
     const {games,locations,versions} = useTypedSelector(state => state.order)
 
     const history = useHistory()
@@ -39,7 +40,9 @@ const OrderServer:React.FC = () => {
     useEffect(()=>{
         fetchGames()
         fetchLocations()
-
+        return () =>{
+            dispatch(resetOrdersPage())
+        }
     },[])
 
     useEffect(()=>{
@@ -60,13 +63,16 @@ const OrderServer:React.FC = () => {
 
     const orderServerHandler = async() =>{
         try{
+            startLoading()
             const {data} = await serverAPI.orderServer(game.id,location.id,slots,period,version.id)
             dispatch(setMessage(data.message))
             setTimeout(()=>{
+                dispatch(ResetGlobal())
                 history.push('/')
             },3000)
         }catch(e){
             dispatch(setError(e))
+            stopLoading()
         }
     }
 
