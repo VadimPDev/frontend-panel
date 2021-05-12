@@ -15,7 +15,11 @@ export const loginUser = (email:string,password:string):userType =>{
             const response = await userAPI.login(email, password)
             dispatch(setUser(response.email,response.role,response.id))
         }catch(e){
-            dispatch({type:GlobalActionTypes.SET_ERROR,payload:e.response.data.message})
+            if(e.response?.status === 403){
+                dispatch({type:GlobalActionTypes.SET_ERROR,payload:e.response.data.message})
+            }else {
+                dispatch({type:GlobalActionTypes.SET_ERROR,payload:'Сетевая ошибка'})
+            }
         }
     }
 }
