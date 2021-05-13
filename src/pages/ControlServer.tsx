@@ -22,6 +22,7 @@ import ConsoleComponent from '../components/ConsoleComponent';
 import SampImage from '../assets/img/games/samp.png'
 import MtaImage from '../assets/img/games/mtasa.png'
 import Cs16Image from '../assets/img/games/cs16.png'
+import MinecraftImage from '../assets/img/games/minecraft.png'
 
 
 interface TabPanelProps {
@@ -84,6 +85,8 @@ const ControlServer:React.FC = () => {
           return MtaImage
         case 'cs16':
           return Cs16Image
+        case 'minecraft':
+          return MinecraftImage  
       }
     }
 
