@@ -13,7 +13,8 @@ export interface IGlobal {
 }
 
 export interface IResponse {
-    message:string
+    message:string;
+    response:string;
 }
 
 export type GlobalAction = LoadingStartAction | LoadingStopAction | SetErrorAction | SetMessageAction | ResetGlobalStateAction

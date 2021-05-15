@@ -130,5 +130,10 @@ export const serverAPI = {
         return $authHost.get('/api/server/console',{
             params:{id}
         })
+    },
+    sendRcon(id:number,command:string){
+        return $authHost.post<IResponse>('/api/server/rcon',{
+            id,command
+        }).then(res => res.data)
     }
 }
