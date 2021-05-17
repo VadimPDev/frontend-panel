@@ -25,7 +25,7 @@ const ConsoleComponent:React.FC<ConsoleProps> = ({id}) => {
     }
 
     const modify = (text:string) =>{
-        return text.split('/').join('\n' + '/')
+        return text.split('/').join('\n'.concat('/'))
     }
 
     const changeCommand = (event:React.ChangeEvent<HTMLInputElement>) =>{
@@ -36,7 +36,7 @@ const ConsoleComponent:React.FC<ConsoleProps> = ({id}) => {
         try{
             startLoading()
             const response = await serverAPI.sendRcon(id, command)
-            setConsoleValue(prevValue => prevValue + modify(response.response))
+            setConsoleValue(prevValue => prevValue + response.response)
             stopLoading()
         }catch(e){
             setError(e)
