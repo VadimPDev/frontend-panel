@@ -1,4 +1,6 @@
-
+import {IGame} from './game'
+import {ILocation} from './location'
+import {IVersion} from './version'
 
 export enum orderActiionTypes {
     FETCH_GAMES_START = 'FETCH_GAMES_START',
@@ -11,25 +13,6 @@ export enum orderActiionTypes {
     FETCH_VERSIONS_START = 'FETCH_VERSIONS_START',
     FETCH_VERSIONS_ERROR = 'FETCH_VERSIONS_ERROR',
     RESET_ORDERS_SERVERS = 'RESET_ORDERS_SERVERS'
-}
-export interface ILocation {
-    id:number;
-    l_name:string;
-}
-
-export interface IVersion {
-    id:number;
-    v_name:string;
-    v_code:string;
-}
-
-
-export interface IGame {
-    id:number;
-    g_name:string;
-    g_min_slots:number;
-    g_max_slots:number;
-    g_price:number;
 }
 
 export interface IOrderServer {

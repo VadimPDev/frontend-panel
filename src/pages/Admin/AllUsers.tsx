@@ -56,9 +56,8 @@ const AllUsers:React.FC = () => {
     }
 
     const clickHandler = (id:number):void =>{
-        setUser(users[id-1])
+        setUser(users.find(el => el.id === id)!)
         setEdit(!edit)
-        closeHandler()
     }
 
     useEffect(()=>{
@@ -167,7 +166,7 @@ const AllUsers:React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {users.map((row) => <UserRow row={row} clickHandler={clickHandler}/>) }
+            {users.map((row) => <UserRow key={row.id} row={row} clickHandler={clickHandler}/>) }
           </TableBody>
         </Table>
       </TableContainer> : '' }

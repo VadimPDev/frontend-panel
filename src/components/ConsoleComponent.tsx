@@ -24,10 +24,6 @@ const ConsoleComponent:React.FC<ConsoleProps> = ({id}) => {
         setConsoleValue(e.target.value)
     }
 
-    const modify = (text:string) =>{
-        return text.split('/').join('\n'.concat('/'))
-    }
-
     const changeCommand = (event:React.ChangeEvent<HTMLInputElement>) =>{
         setCommand(event.target.value)
     }

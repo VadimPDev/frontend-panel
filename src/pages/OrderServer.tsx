@@ -12,7 +12,9 @@ import FormControl from '@material-ui/core/FormControl';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import Select from '@material-ui/core/Select';
-import {IGame,ILocation, IVersion} from '../types/orderServer'
+import {ILocation} from '../types/location'
+import {IGame} from '../types/game'
+import {IVersion} from '../types/version'
 import {serverAPI} from '../http/serverApi'
 import { useHistory } from 'react-router';
 import OrderTotal from '../components/UI/OrderTotal';
