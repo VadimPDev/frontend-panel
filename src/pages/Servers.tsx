@@ -48,7 +48,7 @@ const Servers:React.FC = () => {
 
 
     return (
-        <Grid container justify={'center'}>
+        <Grid container justify={'center'} xs={5} sm={12}>
           {servers.length ?
         <TableContainer component={Paper} style={{maxWidth:1400}}>
         <Table className={classes.table} aria-label="simple table">

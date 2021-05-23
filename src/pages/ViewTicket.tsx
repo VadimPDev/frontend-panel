@@ -29,7 +29,7 @@ const ViewTicket:React.FC = () => {
     },[])
 
     useEffect(()=>{
-        socket = io('http://localhost:5000',{ query:{id}, transports: ["websocket"] })
+        socket = io(process.env.REACT_APP_API_URL!,{ query:{id}, transports: ["websocket","polling"] })
         socket.emit('join',{id})
 
         return () =>{

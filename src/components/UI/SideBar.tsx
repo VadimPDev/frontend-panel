@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
+import { createStyles, Theme, makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer'
 import Divider from '@material-ui/core/Divider'
 import List from '@material-ui/core/List'
@@ -13,6 +13,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
 import Collapse from '@material-ui/core/Collapse';
 import MailIcon from '@material-ui/icons/Mail';
+import Hidden from '@material-ui/core/Hidden';
 import HomeIcon from '@material-ui/icons/Home';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
@@ -37,6 +38,13 @@ const useStyles = makeStyles((theme: Theme) =>
             drawerPaper: {
             width: 240,
             },
+            menuButton: {
+              marginRight: theme.spacing(2),
+              [theme.breakpoints.up('sm')]: {
+                display: 'none',
+              },
+            },
+            toolbar: theme.mixins.toolbar,
             drawerContainer: {
             overflow: 'auto',
             },
@@ -58,28 +66,28 @@ const useStyles = makeStyles((theme: Theme) =>
       return <HomeIcon />
    }
  }
+interface SideBarProps {
+  mobileOpen:boolean;
+  setMobileOpen:(mobile:boolean) => void;
+}
 
-
-const SideBar:React.FC = () => {
+const SideBar:React.FC<SideBarProps> = ({mobileOpen,setMobileOpen}) => {
 
     const classes = useStyles()
     const {user} = useTypedSelector(state => state.user)
     const [open, setOpen] = useState<boolean>(false)
+    const theme = useTheme()
 
     const handleClick = () => {
       setOpen(!open);
     };
 
-    return (
-        <Drawer
-        className={classes.drawer}
-        variant="permanent"
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <Toolbar />
-        <div className={classes.drawerContainer}>
+    const handleDrawerToggle = () => {
+      setMobileOpen(!mobileOpen);
+    }
+
+    const drawer = (
+      <div className={classes.drawerContainer}>
           <List>
             {sidebarRoutes.map((route,index) => (
               <StyledLink to={route.path} key={index}>
@@ -118,7 +126,40 @@ const SideBar:React.FC = () => {
           : ''
           }
         </div>
-      </Drawer>
+    )
+
+    return (
+      <>
+      <Hidden smUp implementation="css">
+          <Drawer
+          className={classes.drawer}
+          variant="temporary"
+          anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
+          >
+        <Toolbar />
+          {drawer}
+        </Drawer>
+      </Hidden>
+       <Hidden xsDown implementation="css">
+          <Drawer
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            variant="permanent"
+            open
+          >
+            {drawer}
+          </Drawer>
+     </Hidden>
+     </>
     );
 }
 

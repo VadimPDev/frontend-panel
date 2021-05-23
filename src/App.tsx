@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import './App.css';
 import AppRouter from './components/AppRouter';
 import Navbar from './components/UI/Navbar';
 import { useActions } from './hooks/useActions';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import {userAPI} from './http/userAPI'
 import { useTypedSelector } from './hooks/useTypedSelector';
 import SideBar from './components/UI/SideBar';
@@ -17,6 +16,7 @@ const App:React.FC = () => {
   const {setUser} = useActions()
   const {isAuth} = useTypedSelector(state => state.user)
   const {loading} = useTypedSelector(state => state.global)
+  const [mobileOpen,setMobileOpen] = useState<boolean>(false)
 
   useEffect(()=>{
     async function getUser() {
@@ -31,8 +31,8 @@ const App:React.FC = () => {
   return (
     <BrowserRouter>
         <div style={{display:'flex'}}>
-          <Navbar />
-          {isAuth && (<SideBar />)}
+          <Navbar mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} />
+          {isAuth && (<SideBar mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} />)}
           <main className="main" style={{flexGrow:1,padding:isAuth ? '90px 30px 0px 50px' : '0',position:'relative'}}>
             {loading ? <Loader /> : '' }
               <AlertMessage />
