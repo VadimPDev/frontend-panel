@@ -120,12 +120,13 @@ const OrderServer:React.FC = () => {
 
     return (
         <Grid container justify={'center'} >
-                <Card style={{width:850,margin:5}}>
+            <Grid container item md={8} lg={7} sm={5}>
+                <Card style={{width:'100%',margin:5}}>
                 <CardContent>
                     <Typography  color="textSecondary" gutterBottom>
                     Заказ сервера
                     </Typography>
-                    <Grid container direction={"column"}>
+                    <Grid container item direction={"column"}>
                         <FormControl style={{maxWidth:650,marginTop:15}}>
                             <InputLabel id="game-label">Игра</InputLabel>
                             <Select
@@ -205,16 +206,19 @@ const OrderServer:React.FC = () => {
                 </CardContent>
 
                 </Card>
+                </Grid>
 
-                <OrderTotal
-                    game={game}
-                    location={location}
-                    slots={slots}
-                    price={price}
-                    period={period}
-                    version={version}
-                    orderServerHandler={orderServerHandler}
-               />
+                <Grid item md={3} sm={4}>
+                    <OrderTotal
+                        game={game}
+                        location={location}
+                        slots={slots}
+                        price={price}
+                        period={period}
+                        version={version}
+                        orderServerHandler={orderServerHandler}
+                />
+                </Grid>
         </Grid>
     );
 }

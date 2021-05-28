@@ -1,7 +1,10 @@
+import { Grid } from '@material-ui/core'
 import React from 'react'
-const Main = () => {
+const Main:React.FC = () => {
     return (
-        <div>main</div>
+        <Grid container justify={"center"}>
+            hello    
+        </Grid>
     );
 }
 

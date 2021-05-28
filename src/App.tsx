@@ -9,6 +9,18 @@ import { useTypedSelector } from './hooks/useTypedSelector';
 import SideBar from './components/UI/SideBar';
 import AlertMessage from './components/UI/AlertMessage';
 import Loader from './components/UI/Loader';
+import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    toolbar: theme.mixins.toolbar,
+    content: {
+      flexGrow: 1,
+      padding: theme.spacing(2),
+    },
+  }),
+);
+
 
 
 const App:React.FC = () => {
@@ -17,6 +29,7 @@ const App:React.FC = () => {
   const {isAuth} = useTypedSelector(state => state.user)
   const {loading} = useTypedSelector(state => state.global)
   const [mobileOpen,setMobileOpen] = useState<boolean>(false)
+  const classes = useStyles();
 
   useEffect(()=>{
     async function getUser() {
@@ -33,7 +46,8 @@ const App:React.FC = () => {
         <div style={{display:'flex'}}>
           <Navbar mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} />
           {isAuth && (<SideBar mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} />)}
-          <main className="main" style={{flexGrow:1,padding:isAuth ? '90px 30px 0px 50px' : '0',position:'relative'}}>
+          <main className={classes.content}>
+            <div className={classes.toolbar} />
             {loading ? <Loader /> : '' }
               <AlertMessage />
               <AppRouter />

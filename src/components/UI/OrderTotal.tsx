@@ -23,7 +23,7 @@ interface OrderTotalProps {
 
 const OrderTotal:React.FC<OrderTotalProps> = ({game,slots,location,version,period,price,orderServerHandler}) => {
     return (
-        <Card style={{width:330,margin:5,display:'flex',flexDirection:'column',alignItems:"center"}}>
+        <Card style={{width:'100%',margin:5,display:'flex',flexDirection:'column',alignItems:"center"}}>
                 <CardContent>
                     <Typography variant="h6" component="h3">
                     Игра: {game?.g_name}

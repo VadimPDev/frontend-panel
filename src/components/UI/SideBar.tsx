@@ -22,6 +22,7 @@ import StyledLink from './StyledLink'
 import {adminRoutes, sidebarRoutes} from '../../routes'
 import {useTypedSelector} from '../../hooks/useTypedSelector'
 import {ALL_USERS_ADMIN, MAIN_ROUTE,MY_SERVERS,SERVER_BUY} from '../../utils/consts'
+const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
         createStyles({
@@ -30,10 +31,16 @@ const useStyles = makeStyles((theme: Theme) =>
             },
             appBar: {
             zIndex: theme.zIndex.drawer + 10,
+            [theme.breakpoints.up('sm')]: {
+              width: `calc(100% - ${drawerWidth}px)`,
+              marginLeft: drawerWidth,
+            },
             },
             drawer: {
-            width: 240,
-            flexShrink: 0,
+              [theme.breakpoints.up('sm')]: {
+                width: drawerWidth,
+                flexShrink: 0,
+              },
             },
             drawerPaper: {
             width: 240,
@@ -87,7 +94,8 @@ const SideBar:React.FC<SideBarProps> = ({mobileOpen,setMobileOpen}) => {
     }
 
     const drawer = (
-      <div className={classes.drawerContainer}>
+      <div>
+        <div className={classes.toolbar} />
           <List>
             {sidebarRoutes.map((route,index) => (
               <StyledLink to={route.path} key={index}>
@@ -129,7 +137,7 @@ const SideBar:React.FC<SideBarProps> = ({mobileOpen,setMobileOpen}) => {
     )
 
     return (
-      <>
+      <nav className={classes.drawer} aria-label="mailbox folders">
       <Hidden smUp implementation="css">
           <Drawer
           className={classes.drawer}
@@ -159,7 +167,7 @@ const SideBar:React.FC<SideBarProps> = ({mobileOpen,setMobileOpen}) => {
             {drawer}
           </Drawer>
      </Hidden>
-     </>
+     </nav>
     );
 }
 
