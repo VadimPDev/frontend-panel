@@ -4,10 +4,10 @@
     max-height: 600px;
     overflow: auto;
 }
-.message {
+.message__row {
     margin: 10px 0;
     display: flex;
-    align-items: center;
+    align-items:center;
     max-width: 500px;
 }
 .message__text{
@@ -17,10 +17,10 @@
     font-size: 16px;
     font-weight: 500;
     border-radius: 20px;
-    background-color: rgb(201, 201, 201);
+    background-color: rgb(175, 171, 171);
 }
 .my_message {
-    background-color: rgb(79, 165, 245);
+    background-color: rgb(44, 150, 250);
     color: #fff;
 }
 
@@ -28,4 +28,8 @@
     margin-top: 20px;
     display: flex;
     align-items:center;
+}
+
+.container-messages::-webkit-scrollbar {
+    width: 0;
 }

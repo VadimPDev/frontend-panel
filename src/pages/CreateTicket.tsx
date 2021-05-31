@@ -1,4 +1,4 @@
-import { Button, Grid } from '@material-ui/core';
+import { Button, Grid, Card,CardContent, Container } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import { useFormik } from 'formik';
 import React from 'react'
@@ -33,33 +33,39 @@ const CreateTicket:React.FC = () => {
         }
     })
     return (
-        <Grid container justify={"center"}>
-            <form onSubmit={formik.handleSubmit}>
-                <div style={{width:600,display:'flex',flexDirection:'column',alignItems:'center',paddingBottom:20}}>
-                <TextField
-                    id="name"
-                    name='name'
-                    label="Заголовок"
-                    variant="outlined"
-                    value={formik.values.name}
-                    onChange={formik.handleChange}
-                    fullWidth
-                />
-                <textarea
-                    id='text'
-                    name='text'
-                    placeholder='Введите ваш запрос'
-                    value={formik.values.text}
-                    onChange={formik.handleChange}
-                    rows={20}
-                    cols={82}
-                    style={{marginTop:20,border:'1px solid grey'}}
-                >
-                </textarea>
-                </div>
-                <Button color={'primary'} variant={'contained'} type='submit'>Создать</Button>
-            </form>
-        </Grid>
+        <Container maxWidth={'md'}>
+            <Grid container justify={"center"} xs={12} sm={12} md={12}>
+                <Card style={{width:'100%'}}>
+                <CardContent>
+                <form onSubmit={formik.handleSubmit}>
+                    <div style={{display:'flex',flexDirection:'column',alignItems:'center',paddingBottom:20}}>
+                    <TextField
+                        id="name"
+                        name='name'
+                        label="Заголовок"
+                        variant="outlined"
+                        value={formik.values.name}
+                        onChange={formik.handleChange}
+                        fullWidth
+                    />
+                    <textarea
+                        id='text'
+                        name='text'
+                        placeholder='Введите ваш запрос'
+                        className='ticket__create'
+                        value={formik.values.text}
+                        onChange={formik.handleChange}
+                        rows={20}
+                        style={{marginTop:20,border:'1px solid grey',width:'100%'}}
+                    >
+                    </textarea>
+                    </div>
+                    <Button color={'primary'} variant={'contained'} type='submit'>Создать</Button>
+                </form>
+                </CardContent>
+                </Card>
+            </Grid>
+        </Container>
     );
 }
 

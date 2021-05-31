@@ -16,14 +16,21 @@ const Message:React.FC<IMessageProps> = ({text,sender}) => {
     }
     return (
         isSendByCurrentUser ? (
-            <div className="message">
+            <div className="message__row">
                 <Avatar>V</Avatar>
-                <div className="message__text">{text}</div>
+                <div>
+                    <div className="message__text">
+                        <div className='message__name'>Test</div>
+                        {text}
+                    </div>
+                </div>
             </div>
         )
         : (
-            <div className="message" style={{alignSelf:'flex-end'}}>
-                <div className="message__text my_message">{text}</div>
+            <div className="message__row" style={{alignSelf:'flex-end'}}>
+                <div>
+                    <div className="message__text my_message">{text}</div>
+                </div>
             </div>
         )
     );

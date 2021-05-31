@@ -56,7 +56,7 @@ const ViewTicket:React.FC = () => {
         <Grid container justify={'center'}>
              <Card style={{width:1000,marginTop:20}}>
                 <CardContent>
-                    <Typography variant={'h5'}>Просмотр запроса</Typography>                    
+                    <Typography variant={'h5'}>Просмотр запроса №{id}</Typography>                    
                     <Messages messages={messages} />
                     <div className="ticket_actions">
                         <TextField
