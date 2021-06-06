@@ -6,6 +6,7 @@ const initialState:IServer = {
     s_port:0,
     s_status:0,
     s_password:'',
+    s_rcon:'',
     location:{
         l_ip:'',
         l_name:'',
@@ -27,6 +28,8 @@ export const serverReducer = (state = initialState,action:ServerAction):IServer 
             return {...state,s_status:0}
         case ServerActionTypes.GET_MY_SERVER:
             return {...state, ...action.payload}
+        case ServerActionTypes.SERVER_CHANGE_RCON:
+            return {...state,s_rcon:action.payload}    
         default:
             return state
     }

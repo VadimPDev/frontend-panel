@@ -23,6 +23,7 @@ import SampImage from '../assets/img/games/samp.png'
 import MtaImage from '../assets/img/games/mtasa.png'
 import Cs16Image from '../assets/img/games/cs16.png'
 import MinecraftImage from '../assets/img/games/minecraft.png'
+import SettingsComponent from '../components/SettingsComponent';
 
 
 interface TabPanelProps {
@@ -68,7 +69,7 @@ const ControlServer:React.FC = () => {
 
     const {StartServer,StopServer,getMyserver} = useActions()
 
-    const {s_status,s_port,location,game,id,version,s_password} = useTypedSelector(state => state.server)
+    const {s_status,s_port,location,game,id,version,s_password,s_rcon} = useTypedSelector(state => state.server)
 
     const [value, setValue] = React.useState(0);
     const [info,setInfo] = useState<IInfoServer>({} as IInfoServer)
@@ -174,26 +175,26 @@ const ControlServer:React.FC = () => {
           <Tab label="Редактор конфига" {...a11yProps(2)} />
           <Tab label="Консоль" {...a11yProps(3)} />
           <Tab label="Репозиторий" {...a11yProps(4)} />
-          <Tab label="Настройки" {...a11yProps(4)} />
+          <Tab label="Настройки" {...a11yProps(5)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <InfoComponent />
+          <InfoComponent />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <FtpComponent ip={location.l_ip} password={s_password} id={id} />
+          <FtpComponent ip={location.l_ip} password={s_password} id={id} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <ConfigComponent id={id} />
+          <ConfigComponent id={id} />
       </TabPanel>
       <TabPanel value={value} index={3}>
-        <ConsoleComponent id={id} />
+          <ConsoleComponent id={id} />
       </TabPanel>
       <TabPanel value={value} index={4}>
         Item Five
       </TabPanel>
       <TabPanel value={value} index={5}>
-        Item Six
+          <SettingsComponent id={id} rcon={s_rcon} />
       </TabPanel>
       </div>
     </Grid>

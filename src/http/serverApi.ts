@@ -72,5 +72,11 @@ export const serverAPI = {
         return $authHost.post<IResponse>('/api/server/rcon',{
             id,command
         }).then(res => res.data)
+    },
+    changeRcon(id:number,rcon:string){
+        return $authHost.post<IResponse>('/api/server/changeRcon',{
+            id,
+            rcon
+        }).then(res => res.data)
     }
 }

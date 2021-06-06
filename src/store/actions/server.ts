@@ -30,6 +30,13 @@ export const StopServer = (id:number) =>{
     }
 }
 
+export const changeRcon = (rcon:string) =>{
+    return {
+        type:ServerActionTypes.SERVER_CHANGE_RCON,
+        payload:rcon
+    }
+}
+
 export const getMyserver = (id:string):serverType =>{
     return  async(dispatch) =>{
         dispatch({type:GlobalActionTypes.LOADING_START})

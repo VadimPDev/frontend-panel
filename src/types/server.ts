@@ -4,6 +4,7 @@ export enum ServerActionTypes  {
     GET_MY_SERVER = 'GET_MY_SERVER',
     RESET_ORDERS_SERVERS = 'RESET_ORDERS_SERVERS',
     GET_SERVER_CONFIG = 'GET_SERVER_CONFIG',
+    SERVER_CHANGE_RCON = 'SERVER_CHANGE_RCON'
 }
 
 
@@ -21,6 +22,7 @@ export interface IServer {
     s_port:number;
     s_status:number;
     s_password:string;
+    s_rcon:string;
     location:{
         l_ip:string;
         l_name:string;
@@ -47,7 +49,7 @@ export  interface IInfoServer {
 }
 
 
-export type ServerAction =  IServerStartAction | IServerStopAction | IServerFetchAction
+export type ServerAction =  IServerStartAction | IServerStopAction | IServerFetchAction | IServerChangeRconAction
 
 
 
@@ -55,6 +57,10 @@ interface IServerStartAction {
     type:ServerActionTypes.SERVER_START;
 }
 
+interface IServerChangeRconAction {
+    type:ServerActionTypes.SERVER_CHANGE_RCON;
+    payload:string;
+}
 
 interface IServerStopAction {
     type:ServerActionTypes.SERVER_STOP;
