@@ -27,7 +27,7 @@ const SettingsComponent:React.FC<ISettingsProps> = ({id,rcon}) => {
         enableReinitialize:true,
         onSubmit:async(data) =>{
             try{
-                const change = await serverAPI.changeRcon(id, data.s_rcon)
+                await serverAPI.changeRcon(id, data.s_rcon)
                 changeRcon(data.s_rcon)
                 setMessage('Пароль изменен')
             }catch(e){
